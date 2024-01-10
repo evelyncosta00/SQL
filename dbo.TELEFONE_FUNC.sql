@@ -1,0 +1,45 @@
+--SELECT dbo.TELEFONE_FUNC (11987128971)
+
+
+ CREATE OR ALTER FUNCTION TELEFONE_FUNC (@TEL VARCHAR(50))
+
+RETURNS VARCHAR(50)
+
+AS
+BEGIN 
+
+DECLARE @DDD VARCHAR(50)
+DECLARE @TELEFONE VARCHAR(50) 
+DECLARE @MSG  VARCHAR (50)
+
+
+	IF LEN (@TEL) > 11 AND LEFT (@TEL,1) <> 0
+		BEGIN
+		    SET @MSG = 'TELEFONE INVÁLIDO'
+			RETURN @MSG
+		END
+
+
+	 IF LEN (@TEL) < 11 AND LEFT (@TEL,1) <> 0
+		BEGIN
+			 SET @MSG = 'TELEFONE INVÁLIDO'
+			RETURN @MSG
+		END
+
+
+
+		--SEPARA DDD COM PARENTESES
+		SET @telefone = ('('+(  SUBSTRING (@tel, 1,2))+') ' +   (SUBSTRING (@tel, 3,5))+ '-' + (SUBSTRING (@tel,8,4))) 
+
+
+		IF LEN (@TEL) = 12
+		BEGIN
+			 SET @telefone = ('('+(  SUBSTRING (@tel, 2,2))+') ' +   (SUBSTRING (@tel, 4,5))+ '-' + (SUBSTRING (@tel,9,4))) 
+		 END
+
+
+RETURN @TELEFONE 
+
+END 
+
+
